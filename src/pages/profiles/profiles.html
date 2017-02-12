@@ -1,0 +1,75 @@
+<!--
+  Generated template for the Profiles page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>GitHub Profiles</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <form (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label>
+          GitHub User:
+        </ion-label>
+        <ion-input type="text" [(ngModel)]="github_user" name="github_user"></ion-input>
+      </ion-item>
+      <br/>
+      <button ion-button type="submit" clear small>Search</button>
+    </form>
+    <button ion-button clear small (click)="reset()">Reset</button>
+  </ion-card>
+
+  <ion-card *ngIf="profiles">
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="{{profiles.avatar_url}}">
+      </ion-avatar>
+      <h2>{{profiles.name}}</h2>
+      <p>{{profiles.location}}</p>
+    </ion-item>
+
+    <ion-card-content>
+      <p>{{profiles.bio}}</p>
+    </ion-card-content>
+
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-left clear small>
+          <ion-icon name="person"></ion-icon>
+          <div>{{profiles.followers}} Followers</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-left clear small (click)="showRepos(profiles.login)">
+          <ion-icon name="git-branch"></ion-icon>
+          <div>{{profiles.public_repos}} Public Repos</div>
+        </button>
+      </ion-col>
+      <ion-col center text-center>
+        <ion-note>
+          {{profiles.company}}
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+  </ion-card>
+
+  <ion-card *ngIf="repos">
+    <ion-list>
+      <ion-item *ngFor="let repo of repos" (click)="repoTapped($event, repo)">
+        <h2>{{repo.name}}</h2>
+        <p>{{repo.description}}</p>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+</ion-content>
